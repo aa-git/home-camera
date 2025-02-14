@@ -46,7 +46,7 @@ public class GeneralController {
     private String myLoc;
 
     @Autowired
-    public WebClient webClient;
+    private WebClient webClient;
 
     @GetMapping("/info")
     public StringMsg getInfo() {
@@ -55,6 +55,11 @@ public class GeneralController {
             msg += "\n IP = "+nodes.get(key).get(0) + ", port = " +nodes.get(key).get(1);
         }
         return new StringMsg(msg, true);
+    }
+
+    @GetMapping("/exit")
+    public void terminateService() {
+        System.exit(0);
     }
 
     @GetMapping("/register/{ip}/{port}/{loc}")

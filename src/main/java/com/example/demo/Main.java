@@ -5,11 +5,11 @@ import java.net.InetAddress;
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.example.demo.Internet.Whatsapp;
 import com.example.demo.RepresentationClasses.StringMsg;
-import com.example.demo.System.KeepActive;
-import com.example.demo.System.Terminate;
 
 @SpringBootApplication
 public class Main {
@@ -19,7 +19,7 @@ public class Main {
 		return x.split("=")[1];
 	}
     public static void main(String[] args) {
-
+        System.setProperty("java.awt.headless", "false");
 		/*for(Thread t:Thread.getAllStackTraces().keySet())
 			System.out.println(t.getName());
 		try{Thread.sleep(1000000);}catch(Exception e){}*/
@@ -76,9 +76,11 @@ public class Main {
         if (args.length == 1) {//master node
             System.out.println("running as master node with location at = " + getArgVal(args[0]));
         }
-        SpringApplication.run(Main.class, args);
-        new Thread(new KeepActive()).start();
-        new Thread(new Terminate()).start();
-		
+        ApplicationContext context = SpringApplication.run(Main.class, args);
+        //new Thread(new KeepActive()).start();
+        //new Thread(new Terminate()).start();
+        
+        Whatsapp whatsapp = context.getBean(Whatsapp.class);
+        whatsapp.execute();
     }
 }
