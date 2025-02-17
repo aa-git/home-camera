@@ -11,6 +11,7 @@ public class RobotClass {
 
     @Bean
     public Robot robot() throws AWTException {
+        System.setProperty("java.awt.headless", "false");
         return new Robot();
     }
 }

@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -52,9 +54,16 @@ public class GeneralController {
     public StringMsg getInfo() {
         String msg= "Location = "+myLoc + ", running java tunnel and control code. Registered nodes:";
         for(String key: nodes.keySet()){
-            msg += "\n IP = "+nodes.get(key).get(0) + ", port = " +nodes.get(key).get(1);
+            msg += "\n IP = "+nodes.get(key).get(0) + ", port = " +nodes.get(key).get(1)+", at loc="+key;
         }
         return new StringMsg(msg, true);
+    }
+
+    @GetMapping("/getAllLocations")
+    public Set<String> getAllLocations(){
+        Set<String> loc = new HashSet<String>(nodes.keySet());
+        loc.add(myLoc);
+        return loc;
     }
 
     @GetMapping("/exit")
