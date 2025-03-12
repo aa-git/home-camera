@@ -22,7 +22,7 @@ public class Main {
 
     public static void main(String[] args) {
         System.setProperty("java.awt.headless", "false");
-        // String[] args_ = {"--server.port=8080", "--myLoc=lobby hhg"};
+        // String[] args_ = {"--server.port=8080", "--myLoc=nnanan dd"};
         // args = args_;
         if(args.length==0){
             System.out.println("read README.txt file or");

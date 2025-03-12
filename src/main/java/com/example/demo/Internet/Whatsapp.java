@@ -31,6 +31,9 @@ public class Whatsapp {
     @Value("${server.port}")
     private String myPort;
 
+    @Value("${myLoc}")
+    private String myLoc;
+
     @Autowired
     private WebClient webClient;
 
@@ -67,7 +70,6 @@ public class Whatsapp {
                     for (StackTraceElement x : e.getStackTrace()) {
                         logger.error("--whatsappp thread-->" + x.toString());
                     }
-                    logger.info(e);
                 }
             }
         }
@@ -117,6 +119,32 @@ public class Whatsapp {
                     }
                 }
 
+            } else if (msg.toLowerCase().equals("camera locations")) {
+                String ip = "";
+                try {
+                    ip = InetAddress.getLocalHost().getHostAddress();
+                } catch (Exception e) {
+                    logger.info(e);
+                    return false;
+                }
+                Set<String> locations = webClient
+                        .get().uri("http://" + ip + ":" + myPort + "/getAllLocations")
+                        .retrieve().bodyToMono(Set.class).block();
+                String reply = "";
+                for (String loc : locations) {
+                    if (loc.equals(myLoc)) {
+                        reply += loc + "(master loc)\n";
+                    } else {
+                        reply += loc + "\n";
+                    }
+                }
+                try {
+                    sendMessage(reply);
+                }catch(Exception e){
+                    for (StackTraceElement x : e.getStackTrace()) {
+                        logger.error("--whatsappp thread: 'camera locations' task -->" + x.toString());
+                    }
+                }
             }
             return true;
         }
