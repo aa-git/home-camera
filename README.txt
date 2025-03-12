@@ -7,3 +7,8 @@ as master node
 as slave node
 	java -jar <jar name> --masterIP=1.1.1.1 --masterPort=1234 --server.port=1234 --myLoc="some location"
 		// here --server.port is the port of the application running
+
+
+
+
+"compile using(with curr dir of pom.xml": mvn package spring-boot:repackage 
