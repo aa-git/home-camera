@@ -1,0 +1,5 @@
+> implement heart beat check for slave to be aware of master nodes
+	when master reboot, slave nodes would automatically re-register themselves with the master node
+> correct project name from demo to something good
+> refactor code of "execute tasks" to make it maintainable
+> check the status of other thread, keep alive, terminate threads.
