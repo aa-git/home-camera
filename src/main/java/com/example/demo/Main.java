@@ -22,14 +22,8 @@ public class Main {
 
     public static void main(String[] args) {
         System.setProperty("java.awt.headless", "false");
-
-        /*for(Thread t:Thread.getAllStackTraces().keySet())
-			System.out.println(t.getName());
-		try{Thread.sleep(1000000);}catch(Exception e){}*/
-        // HashMap<Integer, Integer> hm = new HashMap<>();
-        // IdentityHashMap<Integer, Integer> i_hm = new IdentityHashMap<>();
-        String[] args_ = {"--server.port=8080", "--myLoc=lobby hhg"};
-        args = args_;
+        // String[] args_ = {"--server.port=8080", "--myLoc=lobby hhg"};
+        // args = args_;
         if(args.length==0){
             System.out.println("read README.txt file or");
             System.out.println("run with command(as master node):java -jar <jar name> --server.port=1234 --myLoc=\"some location\" ");
@@ -37,13 +31,13 @@ public class Main {
             System.exit(0);
         }
 
-        Boolean runningAsMaster = args.length == 2;
-
         for (int i = 0; i < args.length; i++) {
             logger.info("arg " + i + " : " + getArgVal(args[i]));
         }
 
+        Boolean runningAsMaster = args.length == 2;
         String myIP = "";
+
         try {
             myIP = InetAddress.getLocalHost().getHostAddress();
             logger.info("my ip address = " + myIP);
@@ -57,7 +51,7 @@ public class Main {
             String loc = getArgVal(args[1]);
             logger.info("running as master node, ip:port=" + myIP + ":" + myPort + " and location = " + loc);
         } else {//slave node
-            String masterIP = getArgVal(args[0]), masterPort = getArgVal(args[1]), myPort = getArgVal(args[2]), loc = getArgVal(args[2]);
+            String masterIP = getArgVal(args[0]), masterPort = getArgVal(args[1]), myPort = getArgVal(args[2]), loc = getArgVal(args[3]);
 
             logger.info("running as slave node with IP:port of master = " + masterIP + ":" + masterPort);
             logger.info("slave node ip:port=" + myIP + ":" + myPort + " and location = " + loc);

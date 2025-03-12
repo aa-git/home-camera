@@ -55,7 +55,7 @@ public class Whatsapp {
                 String newMsg = "";
                 String oldMsg = "";
                 while (true) {
-                    robot.delay(500);
+                    robot.delay(1000);
                     newMsg = readMessage();
                     if (!oldMsg.equals(newMsg)) {
                         executeCommand(newMsg);
@@ -65,7 +65,7 @@ public class Whatsapp {
                 }
             } catch (Exception e) {
                 for(StackTraceElement x:e.getStackTrace()){
-                    logger.info("-->"+x.toString());
+                    logger.info("--whatsappp thread-->"+x.toString());
                 }
                 logger.info(e);
             }
