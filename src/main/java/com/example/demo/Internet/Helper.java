@@ -23,10 +23,11 @@ public class Helper  {
         robot.delay(100);
     }
 
-    public static void mouseLeftClick(Robot robot){
+    public static void mouseLeftClick(Robot robot, boolean quick){
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        robot.delay(1000);
+        if (!quick)
+            robot.delay(1000);
     }
 
     public static void copyToClipboard(String msg){
@@ -38,7 +39,7 @@ public class Helper  {
     public static String readFromClipboard() throws  UnsupportedFlavorException, IOException{
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();      
         //Camera.fixClipboardUsingPython();
-        return (String)clipboard.getData(DataFlavor.stringFlavor);  
+        return clipboard.getData(DataFlavor.stringFlavor).toString();
     }
 
 

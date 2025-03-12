@@ -30,7 +30,7 @@ public class Whatsapp {
 
     @Value("${server.port}")
     private String myPort;
-    
+
     @Autowired
     private WebClient webClient;
 
@@ -51,10 +51,11 @@ public class Whatsapp {
 
         @Override
         public void run() {
-            try {
-                String newMsg = "";
-                String oldMsg = "";
-                while (true) {
+
+            String newMsg = "";
+            String oldMsg = "";
+            while (true) {
+                try {
                     robot.delay(1000);
                     newMsg = readMessage();
                     if (!oldMsg.equals(newMsg)) {
@@ -62,12 +63,12 @@ public class Whatsapp {
                         sendMessage(newMsg);
                         oldMsg = newMsg;
                     }
+                } catch (Exception e) {
+                    for (StackTraceElement x : e.getStackTrace()) {
+                        logger.error("--whatsappp thread-->" + x.toString());
+                    }
+                    logger.info(e);
                 }
-            } catch (Exception e) {
-                for(StackTraceElement x:e.getStackTrace()){
-                    logger.info("--whatsappp thread-->"+x.toString());
-                }
-                logger.info(e);
             }
         }
 
@@ -110,7 +111,7 @@ public class Whatsapp {
                             .setContents(new Helper.TransferableImage(image), null);
                     try {
                         sendMessageOfClipboard();
-                    }catch(AWTException e){
+                    } catch (AWTException e) {
                         logger.info(e);
                         return false;
                     }
@@ -125,7 +126,7 @@ public class Whatsapp {
             Helper.moveMouse(robot, 1360, 705);
             logger.info("moving mouse - done");
             for (int i = 0; i < 3; i++) {
-                Helper.mouseLeftClick(robot);
+                Helper.mouseLeftClick(robot, true);
             }
             Helper.keyPress(robot, KeyEvent.VK_CONTROL, KeyEvent.VK_C);
             return Helper.readFromClipboard();
@@ -133,7 +134,7 @@ public class Whatsapp {
 
         private Boolean sendMessage(String msg) throws AWTException {
             Helper.moveMouse(robot, 1100, 790);
-            Helper.mouseLeftClick(robot);
+            Helper.mouseLeftClick(robot, false);
             Helper.copyToClipboard(msg);
             Helper.keyPress(robot, KeyEvent.VK_CONTROL, KeyEvent.VK_V);
             Helper.keyPress(robot, KeyEvent.VK_ENTER);
@@ -142,7 +143,7 @@ public class Whatsapp {
 
         private Boolean sendMessageOfClipboard() throws AWTException {
             Helper.moveMouse(robot, 1100, 790);
-            Helper.mouseLeftClick(robot);
+            Helper.mouseLeftClick(robot, false);
             Helper.keyPress(robot, KeyEvent.VK_CONTROL, KeyEvent.VK_V);
             Helper.keyPress(robot, KeyEvent.VK_ENTER);
             return true;
