@@ -71,13 +71,12 @@ public class Main {
         }
         
         ApplicationContext context = SpringApplication.run(Main.class, args);
-                
+        
         if(runningAsMaster) {
             //new Thread(new KeepActive()).start();
             //new Thread(new Terminate()).start();
             Whatsapp whatsapp = context.getBean(Whatsapp.class);
             whatsapp.execute();
-            
         }
     }
 }
