@@ -33,8 +33,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.example.demo.Logging.LogExecution;
 import com.example.demo.RepresentationClasses.StringMsg;
 import com.github.sarxos.webcam.Webcam;
+//import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @RestController
 public class GeneralController {
@@ -107,6 +109,7 @@ public class GeneralController {
         return "<html><img src=\"c:/users/abhay/onedrive/desktop/lion.jpg\" width=\"500\" height = \"660\" ></html>";
     }
 
+    
     @GetMapping("/runCmd")
     public void getBubbles(@RequestParam String cmd) throws IOException {
         logger.info("\n\n\n-----------------------\ncommand received: " + cmd + "\n\n----------------------------\n\n");
@@ -166,5 +169,16 @@ public class GeneralController {
                 .body(new ByteArrayResource(bytes));
         }
 
+        
+
     }
+
+    
+    //@CircuitBreaker(name = "default")
+    @GetMapping("/circuit-breaker")
+    @LogExecution(parameter=" |circuit breaker logging using custom annotation| ")
+    public void getCircuitBreaker() throws Exception {
+        System.out.println("inside circuit breaker emthod");
+    }
+
 }
