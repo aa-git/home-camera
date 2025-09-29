@@ -1,15 +1,8 @@
 package com.example.demo;
 
-import java.net.InetAddress;
-
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.reactive.function.client.WebClient;
-
-import com.example.demo.Internet.Whatsapp;
-import com.example.demo.RepresentationClasses.StringMsg;
 
 @SpringBootApplication
 public class Main {
@@ -21,6 +14,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
+
+        SpringApplication.run(Main.class, args);
+        /* 
         System.setProperty("java.awt.headless", "false");
         // String[] args_ = {"--server.port=8080", "--myLoc=nnanan dd"};
         // args = args_;
@@ -61,11 +57,11 @@ public class Main {
             while (!(response != null && response.getSuccess())) {
                 logger.info("registering " + myIP + " with master");
                 response = WebClient.builder().build().get().uri("http://" + masterIP + ":" + masterPort + "/register/" + myIP + "/" + myPort + "/" + loc).retrieve().bodyToMono(StringMsg.class).block();
-                /*try {
-                    response = WebClient.builder().build().get().uri("http://" + masterIP + ":" + port + "/register/" + myIP + "/" + myPort + "/" + loc).retrieve().bodyToMono(StringMsg.class).block();
-                }catch(Exception e){
-					response = null;
-				}*/
+                // try {
+                //     response = WebClient.builder().build().get().uri("http://" + masterIP + ":" + port + "/register/" + myIP + "/" + myPort + "/" + loc).retrieve().bodyToMono(StringMsg.class).block();
+                // }catch(Exception e){
+				// 	response = null;
+				// }
             }
             logger.info("registering " + myIP + " with master: success");
         }
@@ -78,5 +74,6 @@ public class Main {
             Whatsapp whatsapp = context.getBean(Whatsapp.class);
             whatsapp.execute();
         }
+        */
     }
 }

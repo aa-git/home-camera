@@ -175,9 +175,9 @@ public class GeneralController {
 
     
     //@CircuitBreaker(name = "default")
-    @GetMapping("/circuit-breaker")
+    @GetMapping("/circuit-breaker/{key}")
     @LogExecution(parameter=" |circuit breaker logging using custom annotation| ")
-    public void getCircuitBreaker() throws Exception {
+    public void getCircuitBreaker(@PathVariable String key) throws Exception {
         System.out.println("inside circuit breaker emthod");
     }
 
